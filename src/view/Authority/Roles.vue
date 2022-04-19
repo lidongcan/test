@@ -24,7 +24,9 @@
               :class="[i1 === 0 ? '' : 'bdtop', 'vcenter']"
             >
               <el-col :span="3">
-                <el-tag closable>{{ itme1.authName }}</el-tag>
+                <el-tag closable @close="delRoles(scope.row, itme1.id)">{{
+                  itme1.authName
+                }}</el-tag>
                 <i class="el-icon-caret-right"></i>
               </el-col>
               <el-col :span="19">
@@ -34,9 +36,12 @@
                   :key="itme2.id"
                 >
                   <el-col :span="5">
-                    <el-tag type="success" closable>{{
-                      itme2.authName
-                    }}</el-tag>
+                    <el-tag
+                      type="success"
+                      closable
+                      @close="delRoles(scope.row, itme2.id)"
+                      >{{ itme2.authName }}</el-tag
+                    >
                     <i class="el-icon-caret-right"></i>
                   </el-col>
                   <el-col :span="18">
