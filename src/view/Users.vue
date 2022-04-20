@@ -70,7 +70,11 @@
             </el-tooltip>
             <!-- 设置用户角色按钮 -->
             <el-tooltip content="设置角色" placement="top" :enterable="false">
-              <el-button type="warning" icon="el-icon-setting"></el-button>
+              <el-button
+                type="warning"
+                icon="el-icon-setting"
+                @click="showSetRolerdialogVisible(scope.row)"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -156,6 +160,33 @@
       <el-button @click="changedialogVisible = false">取 消</el-button>
       <el-button type="primary" @click="changeUser">确 定</el-button>
     </el-dialog>
+    <!-- 设置用户角色弹窗 -->
+    <el-dialog
+      title="提示"
+      :visible.sync="SetRolesdialogVisible"
+      width="30%"
+      @close="SetRolesdialogVisibleClose"
+    >
+      <el-form :model="setRolerInfo" ref="setRolerform">
+        <el-form-item label="姓名">
+          <el-input v-model="setRolerInfo.username" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="角色">
+          <el-input v-model="setRolerInfo.role_name" disabled></el-input>
+        </el-form-item>
+        <el-select v-model="rolevalue" placeholder="请选择">
+          <el-option
+            v-for="item in roleList"
+            :key="item.id"
+            :label="item.roleName"
+            :value="item.id"
+          >
+          </el-option>
+        </el-select>
+      </el-form>
+      <el-button @click="SetRolesdialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="SetRoles">确 定</el-button>
+    </el-dialog>
   </div>
 </template>
 
@@ -193,7 +224,9 @@ export default {
       dialogVisible: false,
       // 修改用户信息弹窗显示状态
       changedialogVisible: false,
-      // 根据id查询到的用户信息
+      // 设置用户角色弹窗显示状态
+      SetRolesdialogVisible: false,
+      // 根据id查询到的要修改的用户信息
       changeUserInfo: {},
       //  获取用户列表的参数对象
       queryInfo: {
@@ -210,6 +243,11 @@ export default {
       },
       userList: [],
       total: 0, //总条数
+      // 要修改角色的用户信息
+      setRolerInfo: {},
+      // 下拉菜单角色列表
+      roleList: [],
+      rolevalue: '',
       // 添加用户表单验证规则
       addUserrules: {
         username: [
@@ -359,6 +397,38 @@ export default {
       this.$message.success('删除成功')
       this.getUserList()
     },
+    // 设置用户角色弹窗
+    showSetRolerdialogVisible(userinfo) {
+      this.setRolerInfo = userinfo
+      this.$http.get(`roles`).then(({ data: res }) => {
+        if (res.meta.status !== 200) {
+          return this.$message.error(res.meta.msg)
+        }
+        this.roleList = res.data
+        this.SetRolesdialogVisible = true
+      })
+    },
+    // 确定设置用户角色
+    async SetRoles() {
+      if (!this.rolevalue) {
+        return this.$message.error('请选择角色')
+      }
+      const { data: res } = await this.$http.put(
+        `users/${this.setRolerInfo.id}/role`,
+        { rid: this.rolevalue }
+      )
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.msg)
+      }
+      this.$message.success('设置角色成功')
+      this.SetRolesdialogVisible = false
+      this.getUserList()
+    },
+    // 关闭设置用户角色弹窗
+    SetRolesdialogVisibleClose() {
+      this.setRolerInfo = {}
+      this.rolevalue = ''
+    },
   },
 }
 </script>
@@ -369,5 +439,8 @@ export default {
 }
 .el-table {
   margin-top: 20px;
+}
+.el-select {
+  margin-bottom: 20px;
 }
 </style>
