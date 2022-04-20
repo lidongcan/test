@@ -23,7 +23,7 @@ body,
 #app {
   height: 100vh;
   width: 100vw;
-  overflow: auto;
+  overflow: hidden;
   min-width: 1540px;
 }
 

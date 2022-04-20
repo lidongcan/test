@@ -219,6 +219,7 @@ export default {
       // 不合法
       callback(new Error('请输入合法的手机号'))
     }
+
     return {
       // 添加用户弹窗显示状态
       dialogVisible: false,
@@ -442,5 +443,12 @@ export default {
 }
 .el-select {
   margin-bottom: 20px;
+}
+.el-card {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+.el-pagination {
+  margin-top: 20px;
 }
 </style>

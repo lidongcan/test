@@ -396,6 +396,7 @@ export default {
 <style scoped>
 .el-card {
   margin-top: 20px;
+  margin-bottom: 50px;
 }
 .el-table {
   margin-top: 20px;
