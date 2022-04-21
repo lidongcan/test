@@ -237,7 +237,6 @@ export default {
       this.cateList = res.data.result
       // 获取商品的总数量
       this.total = res.data.total
-      console.log(res)
     },
     // 监听pagesize改变
     handleSizeChange(newValue) {
@@ -262,12 +261,10 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error('获取父级分类数据失败!')
       }
-      console.log(res.data)
       this.parentCateList = res.data
     },
     // 选中向发生变化触发
     parentCateChanged() {
-      console.log(this.selectdKeys)
       // 如果 selectdKeys 数组中的length大于0证明选中父级分类
       // 反之,就说明没有选中任何父级分类
       if (this.selectdKeys.length > 0) {
@@ -285,7 +282,6 @@ export default {
     },
     // 点击按钮添加新的分类
     addCate() {
-      console.log(this.addCateForm)
       this.$refs.addCateFormRef.validate(async (valid) => {
         if (!valid) return
         const { data: res } = await this.$http.post(
@@ -313,8 +309,6 @@ export default {
         'categories/' + cateInfo.cat_id
       )
       this.editCate = res.data
-      console.log(this.editCate)
-      // console.log(res.data)
       this.editCateDialogVisbel = true
     },
     // 编辑分类信息
@@ -329,7 +323,6 @@ export default {
       this.$message.success('更新分类数据成功!')
       this.getCateList()
       this.editCateDialogVisbel = false
-      // console.log(res)
     },
     // 删除分类
     async removeCate(id) {
