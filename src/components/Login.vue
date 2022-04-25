@@ -2,29 +2,19 @@
   <div class="login_container">
     <div class="login_box">
       <div class="login_logo">
-        <img src="../assets/logo.png" />
+        <img src="../assets/ke1.jpg" />
       </div>
       <div class="login_form">
-        <el-form
-          :model="ruleForm"
-          :rules="rules"
-          ref="ruleFormref"
-          class="demo-ruleForm"
-        >
+        <el-form :model="ruleForm" :rules="rules" ref="ruleFormref" class="demo-ruleForm">
           <el-form-item label="用户名" prop="username">
-            <el-input
-              prefix-icon="el-icon-user"
-              v-model="ruleForm.username"
-              placeholder="请输入用户名"
-            ></el-input>
+            <el-input prefix-icon="el-icon-user" v-model="ruleForm.username" placeholder="请输入用户名"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input
               prefix-icon="el-icon-lock"
               type="password"
               v-model="ruleForm.password"
-              placeholder="请输入密码"
-            ></el-input>
+              placeholder="请输入密码"></el-input>
           </el-form-item>
           <el-form-item class="btns">
             <el-button type="primary" @click="login">登录</el-button>

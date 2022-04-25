@@ -5,20 +5,14 @@
     active-text-color="#409EFF"
     unique-opened
     router
-    :default-active="$route.path"
-  >
+    :default-active="$route.path">
     <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
       <template slot="title">
         <i :class="iconList[item.id]"></i>
         <span>{{ item.authName }}</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item
-          :index="'/' + i.path"
-          v-for="i in item.children"
-          :key="i.id"
-          >{{ i.authName }}</el-menu-item
-        >
+        <el-menu-item :index="'/' + i.path" v-for="i in item.children" :key="i.id">{{ i.authName }}</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
   </el-menu>

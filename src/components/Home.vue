@@ -3,8 +3,8 @@
     <el-container>
       <el-header>
         <div class="logo">
-          <img src="../assets/logo.png" />
-          <span>大头电商管理系统</span>
+          <img src="../assets/ke1.jpg" />
+          <span>可可电商管理系统</span>
         </div>
         <el-button type="primary" @click="exit">退出</el-button>
       </el-header>

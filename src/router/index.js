@@ -67,6 +67,12 @@ const routes = [
         meta: { title: '数据统计' },
         component: () => import('../view/Reports/Reports.vue'),
       },
+      {
+        path: '/goods/add',
+        name: 'GoodsAdd',
+        meta: { title: '添加商品' },
+        component: () => import('../view/Commodity/add.vue'),
+      },
     ],
   },
 ]
