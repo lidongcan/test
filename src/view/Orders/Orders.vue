@@ -179,7 +179,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 .el-table {
   margin-top: 20px;
 }
