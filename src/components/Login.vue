@@ -10,11 +10,7 @@
             <el-input prefix-icon="el-icon-user" v-model="ruleForm.username" placeholder="请输入用户名"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input
-              prefix-icon="el-icon-lock"
-              type="password"
-              v-model="ruleForm.password"
-              placeholder="请输入密码"></el-input>
+            <el-input prefix-icon="el-icon-lock" type="password" v-model="ruleForm.password" placeholder="请输入密码"></el-input>
           </el-form-item>
           <el-form-item class="btns">
             <el-button type="primary" @click="login">登录</el-button>
@@ -67,7 +63,7 @@ export default {
         this.$http.post('login', this.ruleForm).then(({ data: res }) => {
           if (res.meta.status == 200) {
             window.sessionStorage.setItem('token', res.data.token)
-            this.$router.push('/home')
+            this.$router.push('/welcome')
             return this.$message.success('登录成功')
           } else {
             return this.$message.error('登录失败,用户名或密码错误')
@@ -82,13 +78,15 @@ export default {
 <style scope>
 .login_container {
   height: 100%;
-  background-color: #28667c;
+  /* width: 100%; */
+  background-image: url(../assets/login.jpg);
+  background-size: cover;
 }
 .login_box {
   box-sizing: border-box;
   width: 400px;
   height: 400px;
-  background-color: rgb(243, 219, 232);
+  background-color: #fdfdfd;
 
   border-radius: 10px;
   position: absolute;
@@ -106,7 +104,7 @@ export default {
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgb(243, 219, 232);
+  background-color: #fcfcfc;
 }
 img {
   width: 100%;

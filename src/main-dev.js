@@ -9,6 +9,9 @@ import './assets/css/index.css'
 import ZkTable from 'vue-table-with-tree-grid'
 // 富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
+// 导入nprogress进度条
+import nprogress from 'nprogress'
+import 'nprogress/nprogress.css'
 // 编辑器样式
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
@@ -25,6 +28,7 @@ axios.defaults.baseURL = 'https://lianghj.top:8888/api/private/v1/'
 // 请求拦截器
 axios.interceptors.request.use(
   (config) => {
+    nprogress.start()
     config.headers.Authorization = window.sessionStorage.getItem('token')
     return config
   },
@@ -32,6 +36,11 @@ axios.interceptors.request.use(
     return this.$message.error('请求超时')
   },
 )
+// 响应拦截器
+axios.interceptors.response.use((config) => {
+  nprogress.done()
+  return config
+})
 
 // 时间过滤器，毫秒转换成年月日时分秒
 Vue.filter('dateFormat', function (originVal) {
