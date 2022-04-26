@@ -3,7 +3,7 @@
     <el-container>
       <el-header>
         <div class="logo">
-          <img src="../assets/ke1.jpg" />
+          <div class="imglogo"><img src="../assets/ke1.jpg" /></div>
           <span>可可电商管理系统</span>
         </div>
         <el-button type="primary" @click="exit">退出</el-button>
@@ -62,5 +62,10 @@ export default {
 }
 .el-main {
   background-color: #e8e2e2;
+}
+.imglogo {
+  border: 1px solid;
+  border-radius: 50%;
+  overflow: hidden;
 }
 </style>
