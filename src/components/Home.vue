@@ -3,7 +3,7 @@
     <el-container>
       <el-header>
         <div class="logo">
-          <div class="imglogo"><img src="../assets/ke1.jpg" /></div>
+          <div class="imglogo"></div>
           <span>可可电商管理系统</span>
         </div>
         <el-button type="primary" @click="exit">退出</el-button>
@@ -53,9 +53,12 @@ export default {
   color: aliceblue;
   font-size: 25px;
 }
-.logo img {
+
+.imglogo {
   width: 50px;
   height: 50px;
+  background-image: url(../assets/ke1.jpg);
+  background-size: cover;
 }
 .el-aside {
   background-color: #8e8b8b;
