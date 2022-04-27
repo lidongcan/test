@@ -33,7 +33,7 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" @click="editGood(scope.row)">编辑</el-button>
+            <el-button type="text" @click="editGood(scope.row.goods_id)">编辑</el-button>
             <el-button type="text" @click="deleteGood(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -51,9 +51,22 @@
     </el-card>
     <!-- 编辑商品弹窗 -->
     <el-dialog title="编辑商品" :visible.sync="editGoodsdialogVisible" width="30%">
-      <span>这是一段信息</span>
+      <el-form :model="goodsInfo" :rules="addFormRules" label-width="100px" ref="goodsInfoRef">
+        <el-form-item label="商品名称" prop="goods_name">
+          <el-input v-model="goodsInfo.goods_name"></el-input>
+        </el-form-item>
+        <el-form-item label="商品重量" prop="goods_weight">
+          <el-input v-model.number="goodsInfo.goods_weight" :min="0" oninput="if(value<0)value=0"></el-input>
+        </el-form-item>
+        <el-form-item label="商品数量" prop="goods_number">
+          <el-input v-model.number="goodsInfo.goods_number" :min="0" oninput="if(value<0)value=0"></el-input>
+        </el-form-item>
+        <el-form-item label="商品价格" prop="goods_price">
+          <el-input v-model.number="goodsInfo.goods_price" :min="0" oninput="if(value<0)value=0"></el-input>
+        </el-form-item>
+      </el-form>
       <el-button @click="editGoodsdialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="editGoodsdialogVisible = false">确 定</el-button>
+      <el-button type="primary" @click="editGoods">确 定</el-button>
     </el-dialog>
   </div>
 </template>
@@ -75,6 +88,14 @@ export default {
       goodList: [],
       // 编辑商品弹窗默认状态
       editGoodsdialogVisible: false,
+      // 编辑商品弹窗数据
+      goodsInfo: {},
+      addFormRules: {
+        goods_name: [{ required: true, message: '请输入商品名称', trigger: 'blur' }],
+        goods_price: [{ required: true, message: '请输入商品价格', trigger: 'blur' }],
+        goods_weight: [{ required: true, message: '请输入商品重量', trigger: 'blur' }],
+        goods_number: [{ required: true, message: '请输入商品数量', trigger: 'blur' }],
+      },
     }
   },
   created() {
@@ -94,11 +115,25 @@ export default {
       this.$router.push('/goods/add')
     },
     // 编辑商品
-    editGood(row) {
+    async editGood(id) {
+      const { data: res } = await this.$http.get(`goods/${id}`)
+      if (res.meta.status !== 200) return this.$message.error('获取商品信息失败')
+      this.goodsInfo = res.data
       this.editGoodsdialogVisible = true
     },
+    // 编辑商品弹窗确定
+    editGoods() {
+      this.$refs.goodsInfoRef.validate(async (valid) => {
+        if (!valid) return
+        const { data: res } = await this.$http.put(`goods/${this.goodsInfo.goods_id}`, this.goodsInfo)
+        if (res.meta.status !== 200) return this.$message.error('编辑商品失败')
+        this.$message.success('编辑商品成功')
+        this.editGoodsdialogVisible = false
+        this.getGoodList()
+      })
+    },
     // 删除商品
-    async deleteGood(row) {
+    deleteGood(row) {
       this.$confirm('此操作将永久删除该商品, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
